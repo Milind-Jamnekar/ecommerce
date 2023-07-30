@@ -1,8 +1,7 @@
 "use client";
-import Modal from "@/components/ui/Modal";
 import { useStoreModalStore } from "@/hooks/useStoreModal";
 import { UserButton } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
   const onOpen = useStoreModalStore().onOpen;
