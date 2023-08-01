@@ -1,3 +1,17 @@
-export default function page() {
-  return <h1>dashboard page content</h1>;
+import prismadb from "@/lib/prismadb";
+import { FC } from "react";
+
+interface pageProps {
+  params: { storeId: string };
 }
+
+const page: FC<pageProps> = async ({ params }) => {
+  // const store = await prismadb.store.findFirst({
+  //   where: {
+  //     id: params.storeId,
+  //   },
+  // });
+  return <div>Store name is {}</div>;
+};
+
+export default page;
