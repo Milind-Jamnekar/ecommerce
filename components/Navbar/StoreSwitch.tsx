@@ -27,29 +27,6 @@ import { Store } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import { ComponentPropsWithoutRef, useState } from "react";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-
 type PopoverTriggerProps = ComponentPropsWithoutRef<typeof PopoverTrigger>;
 
 interface StoreSwitchProps extends PopoverTriggerProps {
