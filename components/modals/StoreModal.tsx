@@ -16,7 +16,6 @@ import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { redirect } from "next/navigation";
 
 const formShema = z.object({
   name: z.string().min(1),
