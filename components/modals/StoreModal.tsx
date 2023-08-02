@@ -43,6 +43,8 @@ const StoreModal = () => {
       setTimeout(() => {
         window.location.assign(`/${store.data.id}`);
       }, 1000);
+
+      storeModal.onClose();
     } catch (error) {
       toast({
         variant: "destructive",
