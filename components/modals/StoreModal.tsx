@@ -34,11 +34,15 @@ const StoreModal = () => {
 
   const onSubmit = async (data: Form) => {
     try {
-      const response = await axios.post("/api/stores", data);
+      const store = await axios.post("/api/stores", data);
       toast({
         title: "Store Create successfully",
-        description: new Date(response.data.createdAt).toLocaleString(),
+        description: new Date(store.data.createdAt).toLocaleString(),
       });
+
+      setTimeout(() => {
+        window.location.assign(`/${store.data.id}`);
+      }, 1000);
     } catch (error) {
       toast({
         variant: "destructive",
