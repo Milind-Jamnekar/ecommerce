@@ -19,12 +19,12 @@ export default async function Navbar() {
   return (
     <div>
       <div className="border-b">
-        <div className="h-16 flex items-center px-4">
+        <div className="h-16 flex items-center px-4 ">
           <div className="">
             <StoreSwitch items={store} />
           </div>
           <div className="">
-            <MainNav className="space-x-4" />
+            <MainNav className="mx-5" />
           </div>
           <div className="ml-auto flex items-center space-x-4">
             <UserButton afterSignOutUrl="/" />
