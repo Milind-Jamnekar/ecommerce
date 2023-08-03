@@ -16,6 +16,7 @@ import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useEffect } from "react";
 
 const formShema = z.object({
   name: z.string().min(1),
@@ -81,6 +82,7 @@ const StoreModal = () => {
             />
             <div className="flex items-center justify-end gap-4">
               <Button
+                type="button"
                 disabled={form.formState.isSubmitting}
                 variant="outline"
                 onClick={storeModal.onClose}

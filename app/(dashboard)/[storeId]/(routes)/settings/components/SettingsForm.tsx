@@ -21,8 +21,10 @@ import {
 import { Input } from "@/components/ui/Input";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import AlertModal from "@/components/modals/AlertModal";
+import ApiAlert from "@/components/ui/ApiAlert";
+import { useOrigin } from "@/hooks/useOrigin";
 
 const formSchema = z.object({
   name: z.string().min(2),
@@ -37,7 +39,9 @@ interface SettingsFormProps {
 export default function SettingsForm({ store }: SettingsFormProps) {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
+  const origin = useOrigin();
   const router = useRouter();
+  const params = useParams();
 
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
@@ -78,7 +82,7 @@ export default function SettingsForm({ store }: SettingsFormProps) {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Error from servers! Please try later",
+        title: "Make Sure you removed all products and categories first.",
       });
     } finally {
       setOpen(false);
@@ -129,6 +133,12 @@ export default function SettingsForm({ store }: SettingsFormProps) {
           </Button>
         </form>
       </Form>
+      <Separator />
+      <ApiAlert
+        title="NEXT_PUBLIC_API_URL"
+        description={origin + "api/" + params.storeId}
+        variant="public"
+      />
     </>
   );
 }
