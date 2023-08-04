@@ -1,19 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo, useLayoutEffect } from "react";
 
 export const useOrigin = () => {
   const [mounted, setMounted] = useState(false);
 
-  const origin =
-    typeof window !== "undefined" && window.location.origin
-      ? window.location.origin
-      : "";
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     setMounted(true);
+  }, []);
+
+  const origin = useMemo(() => {
+    if (typeof window !== "undefined" && window.location.origin) {
+      return window.location.origin;
+    }
+    // Provide a default value here or throw an error if needed.
+    return "";
   }, []);
 
   if (!mounted) {
     return null;
   }
+
   return origin;
 };

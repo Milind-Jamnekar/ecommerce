@@ -1,5 +1,5 @@
 "use client";
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { Button } from "../ui/Button";
 import { ImagePlus, Trash } from "lucide-react";
 import Image from "next/image";
@@ -18,9 +18,12 @@ const ImageUpload: FC<ImageUploadProps> = ({
   onRemove,
   values,
 }) => {
-  const onUpload = (result: any) => {
-    onChange(result.info.secure_url);
-  };
+  const onUpload = useCallback(
+    (result: any) => {
+      onChange(result.info.secure_url);
+    },
+    [onChange]
+  );
 
   return (
     <div>

@@ -75,7 +75,7 @@ export default function BillboardForm({ billboard }: BillboardFormProps) {
         title: toastMessage,
         description: new Date().toLocaleString(),
       });
-
+      router.push(`/${params.storeId}/billboards/`);
       router.refresh();
     } catch (error) {
       toast({
