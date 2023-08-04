@@ -35,9 +35,7 @@ const CellAction: FC<CellActionProps> = ({ rowData }) => {
   const onDelete = async () => {
     setLoading(true);
     try {
-      await axios.delete(
-        `/api/stores/${params.storeId}/billboards/${rowData.id}`
-      );
+      await axios.delete(`/api/${params.storeId}/billboards/${rowData.id}`);
       toast({
         title: "Store deleted successfully",
         description: new Date().toLocaleString(),

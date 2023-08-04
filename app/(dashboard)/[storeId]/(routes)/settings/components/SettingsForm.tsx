@@ -54,7 +54,7 @@ export default function SettingsForm({ store }: SettingsFormProps) {
     console.log(data);
 
     try {
-      await axios.patch(`/api/stores/${store.id}`, data);
+      await axios.patch(`/api/${store.id}`, data);
       toast({
         title: "Store updated successfully",
         description: new Date().toLocaleString(),
@@ -71,7 +71,7 @@ export default function SettingsForm({ store }: SettingsFormProps) {
 
   const onDelete = async () => {
     try {
-      await axios.delete(`/api/stores/${store.id}`);
+      await axios.delete(`/api/${store.id}`);
       toast({
         title: "Store deleted successfully",
         description: new Date().toLocaleString(),

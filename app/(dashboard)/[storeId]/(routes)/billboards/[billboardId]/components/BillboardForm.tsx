@@ -63,11 +63,11 @@ export default function BillboardForm({ billboard }: BillboardFormProps) {
     try {
       if (billboard) {
         await axios.patch(
-          `/api/stores/${params.storeId}/billboards/${params.billboardId}`,
+          `/api/${params.storeId}/billboards/${params.billboardId}`,
           data
         );
       } else {
-        await axios.post(`/api/stores/${params.storeId}/billboards`, data);
+        await axios.post(`/api/${params.storeId}/billboards`, data);
       }
       toast({
         title: toastMessage,
@@ -86,7 +86,7 @@ export default function BillboardForm({ billboard }: BillboardFormProps) {
   const onDelete = async () => {
     try {
       await axios.delete(
-        `/api/stores/${params.storeId}/billboards/${params.billboardId}`
+        `/api/${params.storeId}/billboards/${params.billboardId}`
       );
       toast({
         title: "Store deleted successfully",
