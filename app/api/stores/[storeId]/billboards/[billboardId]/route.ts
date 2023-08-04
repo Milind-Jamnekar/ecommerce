@@ -48,18 +48,18 @@ export async function PATCH(
       return new NextResponse("storeId is required", { status: 400 });
     }
 
-    const billboard = await prismadb.billboard.updateMany({
-      where: {
-        id: params.billboardId,
-        storeId: params.storeId,
-      },
-      data: {
-        label,
-        imageUrl,
-      },
-    });
+    // const billboard = await prismadb.billboard.update({
+    //   where: {
+    //     id: params.billboardId,
+    //     storeId: params.storeId,
+    //   },
+    //   data: {
+    //     label,
+    //     imageUrl,
+    //   },
+    // });
 
-    return NextResponse.json(billboard);
+    return NextResponse.json({});
   } catch (error) {
     console.log("[BILLBOARD_PATCH]", error);
     return new NextResponse("Internal error", { status: 500 });
