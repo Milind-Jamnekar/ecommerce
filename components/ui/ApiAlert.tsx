@@ -27,6 +27,11 @@ const ApiAlert: FC<ApiAlertProps> = ({ description, title, variant }) => {
     navigator.clipboard.writeText(description);
     toast({
       title: "API route copied to the clipboard",
+      description: (
+        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+          {title} request copied
+        </code>
+      ),
     });
   };
   return (
