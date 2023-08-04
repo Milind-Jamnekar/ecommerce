@@ -5,6 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import { Button } from "@/components/ui/Button";
@@ -29,6 +30,11 @@ const CellAction: FC<CellActionProps> = ({ rowData }) => {
     navigator.clipboard.writeText(id);
     toast({
       title: "Billboard id copied to the clipboard",
+      description: (
+        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+          {id}
+        </code>
+      ),
     });
   };
 
@@ -69,8 +75,9 @@ const CellAction: FC<CellActionProps> = ({ rowData }) => {
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align="end" className="w-36">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => onCopy(rowData.id)}>
             <Copy className=" mr-2 h-4 w-4" />
             Copy Id
