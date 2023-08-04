@@ -136,7 +136,7 @@ export default function SettingsForm({ store }: SettingsFormProps) {
       <Separator />
       <ApiAlert
         title="NEXT_PUBLIC_API_URL"
-        description={origin + "api/" + params.storeId}
+        description={origin + "/api/" + params.storeId}
         variant="public"
       />
     </>
