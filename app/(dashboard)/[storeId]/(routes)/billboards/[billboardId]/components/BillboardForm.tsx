@@ -60,8 +60,6 @@ export default function BillboardForm({ billboard }: BillboardFormProps) {
   });
 
   const onSubmit = async (data: FormType) => {
-    console.log(data);
-
     try {
       if (billboard) {
         await axios.patch(
@@ -96,7 +94,7 @@ export default function BillboardForm({ billboard }: BillboardFormProps) {
       });
 
       router.refresh();
-      router.push("/");
+      router.push(`/${params.storeId}/billboards`);
     } catch (error) {
       toast({
         variant: "destructive",
@@ -106,6 +104,7 @@ export default function BillboardForm({ billboard }: BillboardFormProps) {
       setOpen(false);
     }
   };
+
   return (
     <>
       <AlertModal
