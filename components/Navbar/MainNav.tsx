@@ -10,6 +10,7 @@ export default function MainNav({
 }: HTMLAttributes<HTMLElement>) {
   const pathname = usePathname();
   const params = useParams();
+  console.log(pathname);
 
   const routes = [
     {
@@ -20,27 +21,32 @@ export default function MainNav({
     {
       href: `/${params.storeId}/billboards`,
       label: "Billboards",
-      active: pathname === `/${params.storeId}/billboards`,
+      active: pathname.startsWith(`/${params.storeId}/billboards`),
     },
     {
       href: `/${params.storeId}/categories`,
       label: "Categories",
-      active: pathname === `/${params.storeId}/categories`,
+      active: pathname.startsWith(`/${params.storeId}/categories`),
     },
     {
       href: `/${params.storeId}/sizes`,
       label: "Sizes",
-      active: pathname === `/${params.storeId}/sizes`,
+      active: pathname.startsWith(`/${params.storeId}/sizes`),
     },
     {
       href: `/${params.storeId}/colors`,
       label: "Colors",
-      active: pathname === `/${params.storeId}/colors`,
+      active: pathname.startsWith(`/${params.storeId}/colors`),
+    },
+    {
+      href: `/${params.storeId}/products`,
+      label: "Products",
+      active: pathname.startsWith(`/${params.storeId}/products`),
     },
     {
       href: `/${params.storeId}/settings`,
       label: "Settings",
-      active: pathname === `/${params.storeId}/settings`,
+      active: pathname.startsWith(`/${params.storeId}/settings`),
     },
   ];
 
@@ -52,7 +58,9 @@ export default function MainNav({
           key={href}
           className={cn(
             "text-sm font-medium transition-colors hover:text-primary",
-            active ? "text-black dark:text-white" : "text-muted-foreground"
+            active
+              ? "text-black dark:text-white font-semibold"
+              : "text-muted-foreground"
           )}
         >
           {label}

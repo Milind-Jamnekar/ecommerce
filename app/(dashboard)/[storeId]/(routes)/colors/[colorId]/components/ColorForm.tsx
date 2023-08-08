@@ -147,7 +147,7 @@ export default function ColorForm({ color }: BillboardFormProps) {
                       />
 
                       <div
-                        className="p-4 border rounded-full"
+                        className="p-4 rounded-full"
                         style={{ backgroundColor: field.value }}
                       />
                     </div>

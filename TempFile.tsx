@@ -3,7 +3,7 @@
 import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/Button";
 import { Separator } from "@/components/ui/separator";
-import { Billboard, Category } from "@prisma/client";
+import { Image, Category, Color, Product, Size } from "@prisma/client";
 import { Trash } from "lucide-react";
 
 import AlertModal from "@/components/modals/AlertModal";
@@ -30,46 +30,65 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import axios from "axios";
+import { formatPrice } from "@/lib/utils";
+import ImageUpload from "@/components/ImageUpload";
 
 const formSchema = z.object({
-  name: z.string().min(2),
-  billboardId: z.string().min(2),
+  name: z.string().min(1),
+  images: z.object({ url: z.string() }).array(),
+  price: z.coerce.number().min(1),
+  categoryId: z.string().min(1),
+  colorId: z.string().min(1),
+  sizeId: z.string().min(1),
+  isFeatured: z.boolean().default(false).optional(),
+  isArchived: z.boolean().default(false).optional(),
 });
 
 type FormType = z.infer<typeof formSchema>;
 
-interface CategoryFormProps {
-  category: Category | null;
-  billboards: Billboard[];
+interface ProductFormProps {
+  product:
+    | (Product & {
+        images: Image[];
+      })
+    | null;
+  categories: Category[];
+  sizes: Size[];
+  colors: Color[];
 }
 
-export default function CategoryForm({
-  category,
-  billboards,
-}: CategoryFormProps) {
+export default function ProductForm({ product, categories }: ProductFormProps) {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
   const params = useParams();
 
-  const title = category ? "Edit Category" : "Create Category";
-  const description = category ? "Edit existing Category" : "Add new Category";
-  const toastMessage = category
+  const title = product ? "Edit Category" : "Create Category";
+  const description = product ? "Edit existing Category" : "Add new Category";
+  const toastMessage = product
     ? "Category updated"
     : "Category added succefully";
-  const action = category ? "Save Changes" : "Create";
+  const action = product ? "Save Changes" : "Create";
 
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
-    defaultValues: category || {
-      name: "",
-      billboardId: "",
-    },
+    defaultValues: product
+      ? { ...product, price: parseFloat(String(product.price.toNumber())) }
+      : {
+          name: "",
+          categoryId: "",
+          colorId: "",
+          images: [],
+          isArchived: false,
+          isFeatured: false,
+          price: 0,
+          sizeId: "",
+        },
   });
 
   const onSubmit = async (data: FormType) => {
     try {
-      if (category) {
+      if (product) {
         await axios.patch(
           `/api/${params.storeId}/categories/${params.categoryId}`,
           data
@@ -124,7 +143,7 @@ export default function CategoryForm({
       />
       <div className="flex items-center justify-between">
         <Heading title={title} description={description} />
-        {category && (
+        {product && (
           <Button
             variant="destructive"
             size="icon"
@@ -141,13 +160,37 @@ export default function CategoryForm({
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
+          <FormField
+            control={form.control}
+            name="images"
+            render={({ field, formState }) => (
+              <FormItem>
+                <FormLabel>Images</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    disabled={formState.isSubmitting}
+                    onChange={(url) =>
+                      field.onChange([...field.value, { url }])
+                    }
+                    onRemove={(url) =>
+                      field.onChange([
+                        ...field.value.filter((current) => current.url !== url),
+                      ])
+                    }
+                    values={field.value.map((image) => image.url)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-2 gap-8">
             <FormField
               control={form.control}
               name="name"
               render={({ field, formState }) => (
                 <FormItem>
-                  <FormLabel>Label</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
                       autoComplete="off"
@@ -162,7 +205,7 @@ export default function CategoryForm({
             />
             <FormField
               control={form.control}
-              name="billboardId"
+              name="categoryId"
               render={({ field, formState }) => (
                 <FormItem>
                   <FormLabel>Label</FormLabel>
@@ -178,9 +221,9 @@ export default function CategoryForm({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {billboards.map((billbaord) => (
-                        <SelectItem key={billbaord.id} value={billbaord.id}>
-                          {billbaord.label}
+                      {categories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
