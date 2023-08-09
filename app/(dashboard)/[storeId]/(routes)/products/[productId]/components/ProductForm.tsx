@@ -81,7 +81,7 @@ export default function ProductForm({
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: product
-      ? { ...product, price: parseFloat(String(product.price.toNumber())) }
+      ? { ...product, price: parseFloat(String(product?.price)) }
       : {
           name: "",
           categoryId: "",
@@ -95,20 +95,22 @@ export default function ProductForm({
   });
 
   const onSubmit = async (data: FormType) => {
+    console.log(data);
+
     try {
       if (product) {
         await axios.patch(
-          `/api/${params.storeId}/categories/${params.categoryId}`,
+          `/api/${params.storeId}/products/${params.productId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/categories`, data);
+        await axios.post(`/api/${params.storeId}/products`, data);
       }
       toast({
         title: toastMessage,
         description: new Date().toLocaleString(),
       });
-      router.push(`/${params.storeId}/categories/`);
+      router.push(`/${params.storeId}/products/`);
       router.refresh();
     } catch (error) {
       toast({
@@ -120,17 +122,15 @@ export default function ProductForm({
 
   const onDelete = async () => {
     try {
-      await axios.delete(
-        `/api/${params.storeId}/categories/${params.categoryId}`
-      );
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
 
       toast({
-        title: "Category deleted succesfully",
+        title: "Product deleted succesfully",
         description: new Date().toLocaleString(),
       });
 
       router.refresh();
-      router.push(`/${params.storeId}/categories/`);
+      router.push(`/${params.storeId}/products/`);
     } catch (error) {
       toast({
         variant: "destructive",
@@ -281,7 +281,7 @@ export default function ProductForm({
                     </FormControl>
                     <SelectContent>
                       {colors.map((item) => (
-                        <SelectItem key={item.value} value={item.value}>
+                        <SelectItem key={item.id} value={item.id}>
                           <div className="flex items-center gap-x-2">
                             <div
                               className="p-2 rounded-full"
@@ -342,7 +342,7 @@ export default function ProductForm({
                   <div className="space-y-1 leading-none">
                     <FormLabel>Archived</FormLabel>
                     <FormDescription>
-                      You can manage your mobile notifications in the{" "}
+                      The product will <b>Not</b> appear on the home page
                       <Link href="/examples/forms">mobile settings</Link> page.
                     </FormDescription>
                   </div>
@@ -364,8 +364,7 @@ export default function ProductForm({
                   <div className="space-y-1 leading-none">
                     <FormLabel>Featured</FormLabel>
                     <FormDescription>
-                      You can manage your mobile notifications in the{" "}
-                      <Link href="/examples/forms">mobile settings</Link> page.
+                      The product will appear on the home page
                     </FormDescription>
                   </div>
                 </FormItem>

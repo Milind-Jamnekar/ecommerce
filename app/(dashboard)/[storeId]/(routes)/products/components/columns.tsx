@@ -49,7 +49,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
       <div className="flex items-center gap-x-4">
         {row.original.color}
         <div
-          className="h-4 w-4 rounded-full border"
+          className="h-4 w-4 rounded-full"
           style={{ backgroundColor: row.original.color }}
         ></div>
       </div>

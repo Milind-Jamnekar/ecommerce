@@ -48,7 +48,7 @@ const CellAction: FC<CellActionProps> = ({ rowData }) => {
       });
 
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/products`);
     } catch (error) {
       toast({
         variant: "destructive",

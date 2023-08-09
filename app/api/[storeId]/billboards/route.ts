@@ -70,7 +70,7 @@ export async function GET(
 
     return NextResponse.json(billboards);
   } catch (error) {
-    console.log("[BILLBOARD_POST]", error);
+    console.log("[BILLBOARD_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

@@ -24,7 +24,7 @@ export const columns: ColumnDef<ColorColumn>[] = [
       <div className="flex items-center gap-x-4">
         {row.original.value}
         <div
-          className="h-5 w-5 rounded-full border"
+          className="h-5 w-5 rounded-full"
           style={{ backgroundColor: row.original.value }}
         />
       </div>
