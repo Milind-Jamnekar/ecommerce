@@ -95,8 +95,6 @@ export default function ProductForm({
   });
 
   const onSubmit = async (data: FormType) => {
-    console.log(data);
-
     try {
       if (product) {
         await axios.patch(

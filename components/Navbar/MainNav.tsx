@@ -10,7 +10,6 @@ export default function MainNav({
 }: HTMLAttributes<HTMLElement>) {
   const pathname = usePathname();
   const params = useParams();
-  console.log(pathname);
 
   const routes = [
     {
