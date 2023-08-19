@@ -116,6 +116,10 @@ export async function GET(
       },
     });
 
+    if (!products.length) {
+      return NextResponse.json([]);
+    }
+
     return NextResponse.json(products);
   } catch (error) {
     console.log("[PRODUCT_GET]", error);
